@@ -1,7 +1,13 @@
-// pages/api/saveOrder.ts
 import { IncomingForm } from 'formidable';
+import cloudinary from 'cloudinary';
 import fs from 'fs';
 import path from 'path';
+
+cloudinary.v2.config({
+  cloud_name: 'dwpto82q6',  // Replace with your Cloudinary cloud name
+  api_key: '324758513889564',        // Replace with your Cloudinary API key
+  api_secret: 'YpO9sH8WyZG7GK9jzJVDrf_g9vM',  // Replace with your Cloudinary API secret
+});
 
 export const config = {
   api: {
@@ -15,7 +21,6 @@ export default function handler(req: any, res: any) {
   }
 
   const form = new IncomingForm({
-    uploadDir: path.join(process.cwd(), 'public', 'uploads'),
     keepExtensions: true,
     multiples: true,
   });
@@ -36,41 +41,89 @@ export default function handler(req: any, res: any) {
     } = fields;
 
     const imageFile = Array.isArray(files.image) ? files.image[0] : files.image;
-    const imageUrl = imageFile ? `/uploads/${path.basename(imageFile.filepath)}` : '';
 
-    const orderData = {
-      order_number: order_number?.[0] || order_number,
-      product: product?.[0] || product,
-      price: price?.[0] || price,
-      address: address?.[0] || address,
-      receipient_name: receipient_name?.[0] || receipient_name,
-      receipient_last_name: receipient_last_name?.[0] || receipient_last_name,
-      date: date?.[0] || date,
-      image: imageUrl,
-    };
+    // Upload image to Cloudinary
+    if (imageFile) {
+      cloudinary.v2.uploader.upload(imageFile.filepath, { 
+        resource_type: 'auto'  // Automatically handle file type (image, video, etc.)
+      })
+      .then((result) => {
+        const imageUrl = result.secure_url;
 
-    const dataDir = path.join(process.cwd(), 'data');
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir);
-    }
+        const orderData = {
+          order_number: order_number?.[0] || order_number,
+          product: product?.[0] || product,
+          price: price?.[0] || price,
+          address: address?.[0] || address,
+          receipient_name: receipient_name?.[0] || receipient_name,
+          receipient_last_name: receipient_last_name?.[0] || receipient_last_name,
+          date: date?.[0] || date,
+          image: imageUrl, // Cloudinary URL
+        };
 
-    const filePath = path.join(dataDir, 'web-info.json');
-    let orders = [];
+        const dataDir = path.join(process.cwd(), 'data');
+        if (!fs.existsSync(dataDir)) {
+          fs.mkdirSync(dataDir);
+        }
 
-    if (fs.existsSync(filePath)) {
-      const existing = fs.readFileSync(filePath, 'utf-8') || '[]';
-      orders = JSON.parse(existing);
-    }
+        const filePath = path.join(dataDir, 'web-info.json');
+        let orders = [];
 
-    const index = orders.findIndex((o: any) => o.order_number === orderData.order_number);
-    if (index !== -1) {
-      orders[index] = orderData;
+        if (fs.existsSync(filePath)) {
+          const existing = fs.readFileSync(filePath, 'utf-8') || '[]';
+          orders = JSON.parse(existing);
+        }
+
+        const index = orders.findIndex((o: any) => o.order_number === orderData.order_number);
+        if (index !== -1) {
+          orders[index] = orderData;
+        } else {
+          orders.push(orderData);
+        }
+
+        fs.writeFileSync(filePath, JSON.stringify(orders, null, 2));
+
+        res.status(200).json({ success: true, message: 'Order saved', order: orderData });
+      })
+      .catch((error) => {
+        res.status(500).json({ success: false, error: error.message });
+      });
     } else {
-      orders.push(orderData);
+      // If no image, proceed without uploading
+      const orderData = {
+        order_number: order_number?.[0] || order_number,
+        product: product?.[0] || product,
+        price: price?.[0] || price,
+        address: address?.[0] || address,
+        receipient_name: receipient_name?.[0] || receipient_name,
+        receipient_last_name: receipient_last_name?.[0] || receipient_last_name,
+        date: date?.[0] || date,
+        image: '', // No image uploaded
+      };
+
+      const dataDir = path.join(process.cwd(), 'data');
+      if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir);
+      }
+
+      const filePath = path.join(dataDir, 'web-info.json');
+      let orders = [];
+
+      if (fs.existsSync(filePath)) {
+        const existing = fs.readFileSync(filePath, 'utf-8') || '[]';
+        orders = JSON.parse(existing);
+      }
+
+      const index = orders.findIndex((o: any) => o.order_number === orderData.order_number);
+      if (index !== -1) {
+        orders[index] = orderData;
+      } else {
+        orders.push(orderData);
+      }
+
+      fs.writeFileSync(filePath, JSON.stringify(orders, null, 2));
+
+      res.status(200).json({ success: true, message: 'Order saved', order: orderData });
     }
-
-    fs.writeFileSync(filePath, JSON.stringify(orders, null, 2));
-
-    res.status(200).json({ success: true, message: 'Order saved', order: orderData });
   });
 }
