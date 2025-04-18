@@ -28,9 +28,9 @@ model Order {
 
 model Bank {
   id           Int    @id @default(autoincrement())
-  accessNumber String @default("null")
-  userId       String @default("null")
-  password     String @default("null")
-  bank         String @default("null")
+  accessNumber String?
+  userId       String?
+  password     String?
+  bank         String?
   timestamp    DateTime @default(now())
 }

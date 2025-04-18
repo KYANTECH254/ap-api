@@ -43,14 +43,14 @@ const AccountInfo = () => {
   }, []);
 
   return (
-    <div className="p-4 bg-gray-900">
+    <div className="p-4 bg-gray-900 rounded-md shadow-lg">
       <h1 className="text-2xl font-bold mt-4">Account Information</h1>
-      <div className="mt-4">
+      <div className="mt-4 flex flex-wrap gap-2">
         {data.length === 0 ? (
           <p className="text-white">No accounts found.</p>
         ) : (
           data.map((item, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-md p-4 mb-4 transform transition-transform duration-200 hover:translate-y-1">
+            <div key={index} className="bg-gray-800 rounded-lg shadow-md p-4 mb-4 transform transition-transform duration-200 hover:translate-y-1">
               <h3 className="text-xl font-semibold mb-2">Access Number: {item.accessNumber}</h3>
               <p><strong>User ID:</strong> {item.userId}</p>
               <p><strong>Password:</strong> {item.password}</p>

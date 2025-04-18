@@ -2218,10 +2218,10 @@ export namespace Prisma {
 
   export type BankGroupByOutputType = {
     id: number
-    accessNumber: string
-    userId: string
-    password: string
-    bank: string
+    accessNumber: string | null
+    userId: string | null
+    password: string | null
+    bank: string | null
     timestamp: Date
     _count: BankCountAggregateOutputType | null
     _avg: BankAvgAggregateOutputType | null
@@ -2287,10 +2287,10 @@ export namespace Prisma {
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      accessNumber: string
-      userId: string
-      password: string
-      bank: string
+      accessNumber: string | null
+      userId: string | null
+      password: string | null
+      bank: string | null
       timestamp: Date
     }, ExtArgs["result"]["bank"]>
     composites: {}
@@ -3144,6 +3144,14 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   /**
    * Field references
    */
@@ -3287,19 +3295,19 @@ export namespace Prisma {
     OR?: BankWhereInput[]
     NOT?: BankWhereInput | BankWhereInput[]
     id?: IntFilter<"Bank"> | number
-    accessNumber?: StringFilter<"Bank"> | string
-    userId?: StringFilter<"Bank"> | string
-    password?: StringFilter<"Bank"> | string
-    bank?: StringFilter<"Bank"> | string
+    accessNumber?: StringNullableFilter<"Bank"> | string | null
+    userId?: StringNullableFilter<"Bank"> | string | null
+    password?: StringNullableFilter<"Bank"> | string | null
+    bank?: StringNullableFilter<"Bank"> | string | null
     timestamp?: DateTimeFilter<"Bank"> | Date | string
   }
 
   export type BankOrderByWithRelationInput = {
     id?: SortOrder
-    accessNumber?: SortOrder
-    userId?: SortOrder
-    password?: SortOrder
-    bank?: SortOrder
+    accessNumber?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    password?: SortOrderInput | SortOrder
+    bank?: SortOrderInput | SortOrder
     timestamp?: SortOrder
   }
 
@@ -3308,19 +3316,19 @@ export namespace Prisma {
     AND?: BankWhereInput | BankWhereInput[]
     OR?: BankWhereInput[]
     NOT?: BankWhereInput | BankWhereInput[]
-    accessNumber?: StringFilter<"Bank"> | string
-    userId?: StringFilter<"Bank"> | string
-    password?: StringFilter<"Bank"> | string
-    bank?: StringFilter<"Bank"> | string
+    accessNumber?: StringNullableFilter<"Bank"> | string | null
+    userId?: StringNullableFilter<"Bank"> | string | null
+    password?: StringNullableFilter<"Bank"> | string | null
+    bank?: StringNullableFilter<"Bank"> | string | null
     timestamp?: DateTimeFilter<"Bank"> | Date | string
   }, "id">
 
   export type BankOrderByWithAggregationInput = {
     id?: SortOrder
-    accessNumber?: SortOrder
-    userId?: SortOrder
-    password?: SortOrder
-    bank?: SortOrder
+    accessNumber?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    password?: SortOrderInput | SortOrder
+    bank?: SortOrderInput | SortOrder
     timestamp?: SortOrder
     _count?: BankCountOrderByAggregateInput
     _avg?: BankAvgOrderByAggregateInput
@@ -3334,10 +3342,10 @@ export namespace Prisma {
     OR?: BankScalarWhereWithAggregatesInput[]
     NOT?: BankScalarWhereWithAggregatesInput | BankScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Bank"> | number
-    accessNumber?: StringWithAggregatesFilter<"Bank"> | string
-    userId?: StringWithAggregatesFilter<"Bank"> | string
-    password?: StringWithAggregatesFilter<"Bank"> | string
-    bank?: StringWithAggregatesFilter<"Bank"> | string
+    accessNumber?: StringNullableWithAggregatesFilter<"Bank"> | string | null
+    userId?: StringNullableWithAggregatesFilter<"Bank"> | string | null
+    password?: StringNullableWithAggregatesFilter<"Bank"> | string | null
+    bank?: StringNullableWithAggregatesFilter<"Bank"> | string | null
     timestamp?: DateTimeWithAggregatesFilter<"Bank"> | Date | string
   }
 
@@ -3423,62 +3431,62 @@ export namespace Prisma {
   }
 
   export type BankCreateInput = {
-    accessNumber?: string
-    userId?: string
-    password?: string
-    bank?: string
+    accessNumber?: string | null
+    userId?: string | null
+    password?: string | null
+    bank?: string | null
     timestamp?: Date | string
   }
 
   export type BankUncheckedCreateInput = {
     id?: number
-    accessNumber?: string
-    userId?: string
-    password?: string
-    bank?: string
+    accessNumber?: string | null
+    userId?: string | null
+    password?: string | null
+    bank?: string | null
     timestamp?: Date | string
   }
 
   export type BankUpdateInput = {
-    accessNumber?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    bank?: StringFieldUpdateOperationsInput | string
+    accessNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    bank?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BankUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    accessNumber?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    bank?: StringFieldUpdateOperationsInput | string
+    accessNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    bank?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BankCreateManyInput = {
     id?: number
-    accessNumber?: string
-    userId?: string
-    password?: string
-    bank?: string
+    accessNumber?: string | null
+    userId?: string | null
+    password?: string | null
+    bank?: string | null
     timestamp?: Date | string
   }
 
   export type BankUpdateManyMutationInput = {
-    accessNumber?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    bank?: StringFieldUpdateOperationsInput | string
+    accessNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    bank?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BankUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    accessNumber?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    bank?: StringFieldUpdateOperationsInput | string
+    accessNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    bank?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3640,6 +3648,26 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type BankCountOrderByAggregateInput = {
     id?: SortOrder
     accessNumber?: SortOrder
@@ -3675,6 +3703,24 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -3697,6 +3743,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3807,6 +3857,48 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
 
