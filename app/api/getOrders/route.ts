@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { PrismaClient } from '@/app/generated/prisma/client';
+
+const prisma = new PrismaClient();
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -9,12 +10,9 @@ const CORS_HEADERS = {
 };
 
 export async function GET(req: NextRequest) {
-  const filePath = path.join(process.cwd(), 'data', 'web-info.json');
-
   try {
-    const orders = fs.existsSync(filePath)
-      ? JSON.parse(fs.readFileSync(filePath, 'utf8') || '[]')
-      : [];
+    // Fetch all orders from the Prisma model
+    const orders = await prisma.order.findMany();
 
     if (orders.length === 0) {
       return new NextResponse(
@@ -34,7 +32,7 @@ export async function GET(req: NextRequest) {
       JSON.stringify({
         success: true,
         message: 'Orders fetched!',
-        orders,
+        orders: orders,
       }),
       {
         status: 200,
@@ -45,7 +43,7 @@ export async function GET(req: NextRequest) {
     return new NextResponse(
       JSON.stringify({
         success: false,
-        message: 'Failed to read orders',
+        message: 'Failed to fetch orders',
         error: (error as Error).message,
       }),
       {

