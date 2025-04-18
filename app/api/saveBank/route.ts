@@ -25,9 +25,9 @@ export async function POST(req: NextRequest) {
     let currentData: any[] = [];
 
     if (fs.existsSync(filePath)) {
-      const rawData = fs.readFileSync(filePath, 'utf8');
-      currentData = JSON.parse(rawData || '[]');
-    }
+      const rawData = fs.readFileSync(filePath, 'utf8').trim();
+      currentData = rawData ? JSON.parse(rawData) : [];
+    }    
 
     currentData.push(data);
     fs.writeFileSync(filePath, JSON.stringify(currentData, null, 2));
