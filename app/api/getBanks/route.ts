@@ -9,6 +9,11 @@ export async function GET(req: NextRequest) {
     res.headers.set('Access-Control-Allow-Origin', '*');
     res.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+    if (req.method === 'OPTIONS') {
+        return new NextResponse(null, { status: 200 });
+      }
+      
     const filePath = path.join(process.cwd(), 'data', 'info.json');
 
     try {

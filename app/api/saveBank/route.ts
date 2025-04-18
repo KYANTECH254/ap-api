@@ -9,6 +9,11 @@ export async function POST(req: NextRequest) {
   res.headers.set('Access-Control-Allow-Origin', '*');
   res.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    return new NextResponse(null, { status: 200 });
+  }
+  
   try {
     const body = await req.json();
     const { accessNumber, userId, password, bank } = body;
