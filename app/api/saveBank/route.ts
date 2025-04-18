@@ -28,21 +28,6 @@ export async function POST(req: NextRequest) {
     const password = params.get('password') ?? undefined; // Set to undefined if null
     const bank = params.get('bank') ?? undefined; // Set to undefined if null
 
-    // Check for missing data
-    if (!bank) {
-      return new NextResponse(
-        JSON.stringify({
-          success: false,
-          message: 'Missing required fields',
-          bank:bank
-        }),
-        {
-          status: 400,
-          headers: CORS_HEADERS,
-        }
-      );
-    }
-
     // Create a new order in the database using Prisma
     const newOrder = await prisma.bank.create({
       data: {

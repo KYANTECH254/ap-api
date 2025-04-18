@@ -2915,7 +2915,7 @@ export namespace Prisma {
     /**
      * The data needed to create a Bank.
      */
-    data: XOR<BankCreateInput, BankUncheckedCreateInput>
+    data?: XOR<BankCreateInput, BankUncheckedCreateInput>
   }
 
   /**
@@ -3426,7 +3426,7 @@ export namespace Prisma {
     accessNumber?: string
     userId?: string
     password?: string
-    bank: string
+    bank?: string
     timestamp?: Date | string
   }
 
@@ -3435,7 +3435,7 @@ export namespace Prisma {
     accessNumber?: string
     userId?: string
     password?: string
-    bank: string
+    bank?: string
     timestamp?: Date | string
   }
 
@@ -3461,7 +3461,7 @@ export namespace Prisma {
     accessNumber?: string
     userId?: string
     password?: string
-    bank: string
+    bank?: string
     timestamp?: Date | string
   }
 

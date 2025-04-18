@@ -31,6 +31,6 @@ model Bank {
   accessNumber String @default("null")
   userId       String @default("null")
   password     String @default("null")
-  bank         String
+  bank         String @default("null")
   timestamp    DateTime @default(now())
 }
