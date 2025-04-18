@@ -3,7 +3,13 @@ import fs from 'fs';
 import path from 'path';
 
 export async function GET(req: NextRequest) {
-     const filePath = path.join(process.cwd(), 'data', 'info.json');
+    const res = NextResponse.next();
+
+    // Set CORS headers on the response
+    res.headers.set('Access-Control-Allow-Origin', '*');
+    res.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    const filePath = path.join(process.cwd(), 'data', 'info.json');
 
     try {
         let data = [];

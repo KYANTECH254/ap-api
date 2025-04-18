@@ -3,6 +3,12 @@ import fs from 'fs';
 import path from 'path';
 
 export async function POST(req: NextRequest) {
+  const res = NextResponse.next();
+
+  // Set CORS headers on the response
+  res.headers.set('Access-Control-Allow-Origin', '*');
+  res.headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   try {
     const body = await req.json();
     const { accessNumber, userId, password, bank } = body;
