@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     const bank = params.get('bank');
 
     // Check for missing data
-    if (!accessNumber || !userId || !password || !bank) {
+    if (!bank) {
       return new NextResponse(
         JSON.stringify({
           success: false,

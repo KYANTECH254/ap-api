@@ -3423,18 +3423,18 @@ export namespace Prisma {
   }
 
   export type BankCreateInput = {
-    accessNumber: string
-    userId: string
-    password: string
+    accessNumber?: string
+    userId?: string
+    password?: string
     bank: string
     timestamp?: Date | string
   }
 
   export type BankUncheckedCreateInput = {
     id?: number
-    accessNumber: string
-    userId: string
-    password: string
+    accessNumber?: string
+    userId?: string
+    password?: string
     bank: string
     timestamp?: Date | string
   }
@@ -3458,9 +3458,9 @@ export namespace Prisma {
 
   export type BankCreateManyInput = {
     id?: number
-    accessNumber: string
-    userId: string
-    password: string
+    accessNumber?: string
+    userId?: string
+    password?: string
     bank: string
     timestamp?: Date | string
   }
