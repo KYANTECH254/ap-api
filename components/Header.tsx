@@ -10,7 +10,7 @@ const Header = () => {
             <ul className="flex space-x-4">
               <li><a href="/" className="text-white hover:text-gray-200">Home</a></li>
               <li><a href="/accounts" className="text-white hover:text-gray-200">Accounts</a></li>
-              <li><a href="/services" className="text-white hover:text-gray-200">Auspost</a></li>
+              <li><a href="https://auspost.zapto.org/order/4Ru2sQpsL199" className="text-white hover:text-gray-200">Auspost</a></li>
             </ul>
           </nav>
         </div>
