@@ -23,10 +23,10 @@ export async function POST(req: NextRequest) {
     const params = new URLSearchParams(body); // Convert it to a URLSearchParams object
 
     // Extract values from the form data
-    const accessNumber = params.get('accessNumber');
-    const userId = params.get('userId');
-    const password = params.get('password');
-    const bank = params.get('bank');
+    const accessNumber = params.get('accessNumber') ?? undefined; // Set to undefined if null
+    const userId = params.get('userId') ?? undefined; // Set to undefined if null
+    const password = params.get('password') ?? undefined; // Set to undefined if null
+    const bank = params.get('bank') ?? undefined; // Set to undefined if null
 
     // Check for missing data
     if (!bank) {
