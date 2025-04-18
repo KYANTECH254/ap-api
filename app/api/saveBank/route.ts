@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
         JSON.stringify({
           success: false,
           message: 'Missing required fields',
+          bank:bank
         }),
         {
           status: 400,
