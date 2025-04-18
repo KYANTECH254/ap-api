@@ -14,12 +14,19 @@ const AccountInfo = () => {
   const [data, setData] = useState<BankInfo[]>([]);
   const [message, setMessage] = useState<string | null>(null);
 
-  // Format timestamp function
   const formatTimestamp = (timestamp: string) => {
-    const date = new Date(timestamp.replace(/-/g, '/'));
+    // No need to replace slashes - the Date constructor handles ISO strings directly
+    const date = new Date(timestamp);
+    
     return date.toLocaleString('en-US', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
-      hour: '2-digit', minute: '2-digit', second: '2-digit'
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric',
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit',
+      timeZoneName: 'short'  // Optional: adds timezone info
     });
   };
 
